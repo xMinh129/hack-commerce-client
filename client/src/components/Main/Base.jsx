@@ -22,7 +22,7 @@ const Base = ({children}) => (
                         <div id='notifications'>
                             <p className="nav navbar-left-link">
                                 <i className="fa fa-user user-icon" aria-hidden="true"></i>
-                                {Auth.getUserData().d.email}
+                                {Auth.getUserData().d.EmailAddress}
                             </p>
                             <p className="nav"><Link to="/logout">Log out</Link></p>
                         </div>
