@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Auth from '../../modules/Auth';
 
 const styles = {
     card: {
@@ -20,11 +21,60 @@ const styles = {
 
 
 function MediaCard(props) {
-    const { classes, name, image, price, description} = props;
-    // console.log(props)
+    const {classes, name, image, price, productId} = props;
+    console.log(props);
     console.log('media card is rendered');
-    // console.log(name);
-    // console.log(props.image);
+    console.log(name);
+    console.log(props.image);
+
+    function addToCart(){
+        const quantity = 1;
+        var payload = "";
+        if (Auth.getCartCookie()){
+            console.log(Auth.getCartCookie());
+            const cartCookie = Auth.getCartCookie();
+            payload = `productId=${props.productId}&price=${props.price}&quantity=${quantity}&cartCookie=${cartCookie}`;
+        }
+        else{
+            payload = `productId=${props.productId}&price=${props.price}&quantity=${quantity}`;
+        }
+
+
+         // create an AJAX request
+        const xhr = new XMLHttpRequest();
+        xhr.open('post', 'http://localhost:5010/api/addToCart');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+        xhr.responseType = 'json';
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+
+
+                // save the token and user data
+                if (!Auth.getCartCookie()){
+                    Auth.setCartCookie(xhr.response.cookie.d);
+                }
+
+                console.log('Added to cart');
+
+
+                // // change the current URL to /
+                // this.context.router.replace('/');
+            } else {
+                // failure
+
+                // change the component state
+                const errors = xhr.response.errors ? xhr.response.errors : {};
+                errors.summary = xhr.response.message;
+
+            }
+        });
+
+        xhr.send(payload);
+
+    }
+
     return (
         <div>
             <Card className={classes.card}>
@@ -47,6 +97,9 @@ function MediaCard(props) {
                     </Button>
                     <Button size="small" color="primary">
                         Learn More
+                    </Button>
+                    <Button size="small" color="primary" onClick={addToCart}>
+                        Add To Cart
                     </Button>
                 </CardActions>
             </Card>
