@@ -41,13 +41,14 @@ class ItemList extends React.Component {
     }
 
     renderItems() {
-        return this.state.data.map( product =>
+        return this.state.data.map( product => {
             <MediaCard
                 name={product.Name}
+                description={product.Description}
                 image={product.ImageURL}
                 price={product.Price}
             />
-        )
+        })
     }
 
     componentDidMount() {

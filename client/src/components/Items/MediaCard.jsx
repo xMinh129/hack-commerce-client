@@ -20,11 +20,11 @@ const styles = {
 
 
 function MediaCard(props) {
-    const { classes, name, image, price} = props;
-    console.log(props)
+    const { classes, name, image, price, description} = props;
+    // console.log(props)
     console.log('media card is rendered');
-    console.log(name);
-    console.log(props.image);
+    // console.log(name);
+    // console.log(props.image);
     return (
         <div>
             <Card className={classes.card}>
@@ -38,8 +38,7 @@ function MediaCard(props) {
                         {name}
                     </Typography>
                     <Typography component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
+                        {description}
                     </Typography>
                 </CardContent>
                 <CardActions>
