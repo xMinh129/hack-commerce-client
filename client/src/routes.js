@@ -38,7 +38,7 @@ const routes = {
             }
         },
         {
-            path: '/classes',
+            path: '/items',
             component: Items
 
         }

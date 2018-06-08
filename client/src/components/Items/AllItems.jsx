@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {Card} from 'material-ui/Card';
 import LoadingBox from '../Utilities/LoadingBox.jsx';
-import apiRequest from '../../api_methods.jsx';
+// import apiRequest from '../../api_methods.jsx';
 
 class Items extends React.Component {
 
@@ -16,6 +16,7 @@ class Items extends React.Component {
 
 
     componentDidMount() {
+
     }
 
     componentWillMount() {
