@@ -1,7 +1,9 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import Auth from '../../modules/Auth';
-
+import SimpleCard from '../Items/SimpleCard.jsx'
+import MediaCard from '../Items/MediaCard.jsx'
+import ItemList from '../Items/ItemList.jsx'
 
 
 const Base = ({children}) => (
@@ -40,6 +42,9 @@ const Base = ({children}) => (
 
 
         {children}
+
+        <ItemList />
+
 
         <footer className='footer'>
             Corpripurse - Making payment simple

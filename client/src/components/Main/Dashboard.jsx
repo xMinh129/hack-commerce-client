@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
 import Overview from './Overview.jsx';
 import {Card} from 'material-ui/Card';
-import Items from '../Items/AllItems.jsx'
+import ItemList from '../Items/ItemList.jsx'
 
 const Dashboard = ({secretData, token}) => (
-    <Items/>
+    <ItemList/>
 
 );
 
