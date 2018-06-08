@@ -34939,7 +34939,7 @@
 	                            'p',
 	                            { className: 'nav navbar-left-link' },
 	                            _react2.default.createElement('i', { className: 'fa fa-user user-icon', 'aria-hidden': 'true' }),
-	                            _Auth2.default.getUserData().d.email
+	                            _Auth2.default.getUserData().d.EmailAddress
 	                        ),
 	                        _react2.default.createElement(
 	                            'p',
@@ -41182,7 +41182,7 @@
 	                    _this2.setState({
 	                        errors: {}
 	                    });
-	                    console.log(xhr.response.token);
+	                    console.log(xhr.response);
 
 	                    // save the token and user data
 	                    _Auth2.default.authenticateUser(xhr.response.token, xhr.response.user);
