@@ -54,7 +54,7 @@ class LoginPage extends React.Component {
                 this.setState({
                     errors: {}
                 });
-                console.log(xhr.response.token);
+                console.log(xhr.response);
 
                 // save the token and user data
                 Auth.authenticateUser(xhr.response.token, xhr.response.user);
