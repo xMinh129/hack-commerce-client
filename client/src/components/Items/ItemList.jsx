@@ -29,7 +29,6 @@ class ItemList extends React.Component {
         xhr.responseType = 'json';
         xhr.addEventListener('load', () => {
             if (xhr.status === 200) {
-
                 this.setState({
                     data: xhr.response.items.d
                 });
@@ -46,6 +45,7 @@ class ItemList extends React.Component {
                 name={product.Name}
                 image={product.ImageURL}
                 price={product.Price}
+                productId={product.ID}
             />
         )
     }
