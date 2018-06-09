@@ -93,6 +93,9 @@ class Checkout extends React.Component {
                                 </tbody>
                             </table>
                         </div>
+                        <div>
+                            <p>Total amount: {Auth.getTotalPrice()}</p>
+                        </div>
                     </div>
                     <Button size="small" color="primary" >
                         Verify

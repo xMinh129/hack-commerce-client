@@ -55,8 +55,10 @@ function MediaCard(props) {
                 }
 
                 Auth.setCartSize(xhr.response.size);
+                Auth.setTotalPrice(xhr.response.total);
                 console.log('Added to cart');
-                console.log(Auth.getCartSize())
+                console.log(Auth.getCartSize());
+                console.log(Auth.getTotalPrice());
 
 
                 // // change the current URL to /
