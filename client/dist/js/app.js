@@ -35092,6 +35092,7 @@
 	            localStorage.removeItem('userData');
 	            localStorage.removeItem('cartCookie');
 	            localStorage.removeItem('cartSize');
+	            localStorage.removeItem('totalPrice');
 	        }
 
 	        /**
@@ -35128,6 +35129,18 @@
 	        key: 'setCartSize',
 	        value: function setCartSize(cartSize) {
 	            localStorage.setItem('cartSize', cartSize);
+	        }
+	    }, {
+	        key: 'getTotalPrice',
+	        value: function getTotalPrice() {
+	            if (localStorage.getItem('totalPrice')) {
+	                return localStorage.getItem('totalPrice');
+	            }
+	        }
+	    }, {
+	        key: 'setTotalPrice',
+	        value: function setTotalPrice(totalPrice) {
+	            localStorage.setItem('totalPrice', totalPrice);
 	        }
 	    }]);
 
@@ -45730,8 +45743,10 @@
 	                }
 
 	                _Auth2.default.setCartSize(xhr.response.size);
+	                _Auth2.default.setTotalPrice(xhr.response.total);
 	                console.log('Added to cart');
 	                console.log(_Auth2.default.getCartSize());
+	                console.log(_Auth2.default.getTotalPrice());
 
 	                // // change the current URL to /
 	                // this.context.router.replace('/');
@@ -54376,6 +54391,16 @@
 	                                        );
 	                                    })
 	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement(
+	                                'p',
+	                                null,
+	                                'Total amount: ',
+	                                _Auth2.default.getTotalPrice()
 	                            )
 	                        )
 	                    ),

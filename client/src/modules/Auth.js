@@ -34,6 +34,7 @@ class Auth {
         localStorage.removeItem('userData');
         localStorage.removeItem('cartCookie');
         localStorage.removeItem('cartSize');
+        localStorage.removeItem('totalPrice');
     }
 
     /**
@@ -57,7 +58,7 @@ class Auth {
         localStorage.setItem('cartCookie', cartCookie);
     }
 
-     static getCartSize() {
+    static getCartSize() {
         if (localStorage.getItem('cartSize')) {
             return localStorage.getItem('cartSize')
         }
@@ -67,6 +68,17 @@ class Auth {
     static setCartSize(cartSize) {
         localStorage.setItem('cartSize', cartSize);
     }
+
+    static getTotalPrice() {
+        if (localStorage.getItem('totalPrice')) {
+            return localStorage.getItem('totalPrice')
+        }
+    }
+
+    static setTotalPrice(totalPrice) {
+        localStorage.setItem('totalPrice', totalPrice);
+    }
+
 
 }
 
