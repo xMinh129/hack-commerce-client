@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import Auth from "../../modules/Auth";
 import LoadingBox from '../Utilities/LoadingBox.jsx';
 import {ButtonToolbar, Button} from 'react-bootstrap'
+import Verification from '../../components/Items/Verify.jsx';
 
 class Checkout extends React.Component {
 
@@ -11,7 +12,7 @@ class Checkout extends React.Component {
             data: false
         };
         this.loadCart = this.loadCart.bind(this);
-        this.verify_click = this.verify_click.bind(this)
+
     }
 
     loadCart() {
@@ -31,8 +32,7 @@ class Checkout extends React.Component {
         xhr.responseType = 'json';
         xhr.addEventListener('load', () => {
             if (xhr.status === 200) {
-
-
+                console.log(xhr.response);
                 this.setState({
                     data: xhr.response.cart.d.Items
                 })
@@ -58,10 +58,6 @@ class Checkout extends React.Component {
         this.loadCart()
     }
 
-    verify_click(){
-        if (true)
-            alert('Sorry but we did not detect that you are the owner of this account.')
-    }
 
     render() {
 
@@ -102,9 +98,7 @@ class Checkout extends React.Component {
                     </div>
                     <div style={{float: 'right', display: 'inline-block'}}>
                         <ButtonToolbar style={{marginLeft: 'auto', marginRight: 'auto'}}>
-                            <Button bsStyle="info" onclick={this.verify_click()}>
-                                Verify & Pay
-                            </Button>
+                            <Verification/>
                         </ButtonToolbar>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ import Auth from './modules/Auth';
 import SimpleCard from './components/Items/SimpleCard.jsx'
 import Checkout from './components/Main/Checkout.jsx';
 import FindProductButton from './components/Main/FindProductButton.jsx';
+import Payment from './components/Items/Pay.jsx';
 
 
 const routes = {
@@ -48,6 +49,10 @@ const routes = {
             {
                 path: '/checkout',
                 component: Checkout
+            },
+            {
+                path: '/processPayment',
+                component: Payment
             }
 
         ]
