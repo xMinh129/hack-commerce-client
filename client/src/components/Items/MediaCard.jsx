@@ -75,7 +75,7 @@ function MediaCard(props) {
 
     }
 
-    return (
+    return(
         <div>
             <Card className={classes.card}>
                 <CardMedia
