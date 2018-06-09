@@ -1,16 +1,13 @@
 import React, {PropTypes} from 'react';
 
-class Cart extends React.Component {
+const Cart = (props) => {
 
-    render() {
-        const { cartSize } = this.props;
-        console.log(cartSize);
-        return (
-            <p style={{width: '50px', marginRight: '5px', float: 'right'}}>
-                Cart {cartSize}
-            </p>
-        )
-    }
+    return (
+        <p style={{width: '100px', marginRight: '5px', float: 'right'}}>
+            Items in the Cart {props.cartSize}
+        </p>
+    )
+
 }
 
 export default Cart

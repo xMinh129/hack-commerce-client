@@ -77,6 +77,7 @@ function MediaCard(props) {
         });
 
         xhr.send(payload);
+        alert(`Item \'${props.name}\' has been added to your cart.`)
 
     }
 

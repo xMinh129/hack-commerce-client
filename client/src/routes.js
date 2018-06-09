@@ -41,14 +41,13 @@ const routes = {
             },
             {
                 path: '/items',
-                component:
-                ItemList
+                component: ItemList,
+                update: Base.incrementCartSize
             }
             ,
             {
                 path: '/checkout',
-                component:
-                Checkout
+                component: Checkout
             }
 
         ]

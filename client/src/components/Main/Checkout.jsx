@@ -1,28 +1,28 @@
 import React, {PropTypes} from 'react';
 import Auth from "../../modules/Auth";
 import LoadingBox from '../Utilities/LoadingBox.jsx';
-import Button from '@material-ui/core/Button';
+import {ButtonToolbar, Button} from 'react-bootstrap'
 
 class Checkout extends React.Component {
 
-     constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             data: false
         };
         this.loadCart = this.loadCart.bind(this);
-
+        this.verify_click = this.verify_click.bind(this)
     }
 
-    loadCart(){
+    loadCart() {
         var payload = "";
-        if (Auth.getCartCookie()){
+        if (Auth.getCartCookie()) {
             const cartCookie = Auth.getCartCookie();
             console.log(cartCookie);
             payload = `cartCookie=${cartCookie}`;
         }
 
-         // create an AJAX request
+        // create an AJAX request
         const xhr = new XMLHttpRequest();
         xhr.open('post', 'http://localhost:5010/api/getCart');
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -33,9 +33,9 @@ class Checkout extends React.Component {
             if (xhr.status === 200) {
 
 
-               this.setState({
-                   data: xhr.response.cart.d.Items
-               })
+                this.setState({
+                    data: xhr.response.cart.d.Items
+                })
                 console.log(this.state.data);
 
 
@@ -53,53 +53,60 @@ class Checkout extends React.Component {
 
         xhr.send(payload);
     }
-    componentDidMount(){
-         this.loadCart()
+
+    componentDidMount() {
+        this.loadCart()
     }
 
+    verify_click(){
+        if (true)
+            alert('Sorry but we did not detect that you are the owner of this account.')
+    }
 
     render() {
 
         if (this.state.data) {
             return (
                 <div>
-                    <div>
-                        <div className="table100 ver1 m-b-110">
-                            <div className="table100-head">
-                                <table>
-                                    <thead>
-                                    <tr className="row100 head">
-                                        <th className="cell100 column1">Product Name</th>
-                                        <th className="cell100 column2">Quantity</th>
-                                        <th className="cell100 column3">Unit price</th>
-                                        <th className="cell100 column4">Total</th>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-
-                       <div className="table100-body js-pscroll">
+                    <div className="table100 ver1 m-b-110">
+                        <div className="table100-head">
                             <table>
-                                <tbody>
-                                {this.state.data.map(item =>
-                                    <tr className="row100 body">
-                                        <td className="cell100 column1">{item.Name}</td>
-                                        <td className="cell100 column2">{item.Quantity}</td>
-                                        <td className="cell100 column3">{item.Price}</td>
-                                        <td className="cell100 column4">{item.Total}</td>
-                                    </tr>
-                                )}
-                                </tbody>
+                                <thead>
+                                <tr className="row100 head">
+                                    <th className="cell100 column1">Product Name</th>
+                                    <th className="cell100 column2">Quantity</th>
+                                    <th className="cell100 column3">Unit price</th>
+                                    <th className="cell100 column4">Total</th>
+                                </tr>
+                                </thead>
                             </table>
                         </div>
-                        <div>
-                            <p>Total amount: {Auth.getTotalPrice()}</p>
-                        </div>
                     </div>
-                    <Button size="small" color="primary" >
-                        Verify
-                    </Button>
+
+                    <div className="table100-body js-pscroll">
+                        <table>
+                            <tbody>
+                            {this.state.data.map(item =>
+                                <tr className="row100 body">
+                                    <td className="cell100 column1">{item.Name}</td>
+                                    <td className="cell100 column2">{item.Quantity}</td>
+                                    <td className="cell100 column3">{item.Price}</td>
+                                    <td className="cell100 column4">{item.Total}</td>
+                                </tr>
+                            )}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style={{display: 'inline-block'}}>
+                        <p>Total amount: {Auth.getTotalPrice()}</p>
+                    </div>
+                    <div style={{float: 'right', display: 'inline-block'}}>
+                        <ButtonToolbar style={{marginLeft: 'auto', marginRight: 'auto'}}>
+                            <Button bsStyle="info" onclick={this.verify_click()}>
+                                Verify & Pay
+                            </Button>
+                        </ButtonToolbar>
+                    </div>
                 </div>
 
             )

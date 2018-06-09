@@ -22,7 +22,6 @@ class ItemList extends React.Component {
 
     loadItems() {
         // create an AJAX request
-        console.log('Loading Items')
         const xhr = new XMLHttpRequest();
         xhr.open('post', 'http://localhost:5010/api/getItems');
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -41,17 +40,17 @@ class ItemList extends React.Component {
     }
 
     renderItems() {
-        console.log('rendering items.........')
-        console.log(this.state.data)
         return this.state.data.map( product =>
             // console.log('map function'); ok
             // console.log(product.Name); ok
             <MediaCard
+                style={{display: 'inline-block', marginRight: '15px'}}
                 name={product.Name}
                 description={product.Description}
                 image={product.ImageURL}
                 price={product.Price}
                 productId={product.ID}
+                updateCart={this.props.incrementCartSize}
             />
         )
     }
@@ -69,6 +68,9 @@ class ItemList extends React.Component {
     }
 
     render() {
+
+        console.log('displaying all props of itemList.')
+        console.log(this.props)
 
         if (this.state.data) {
             console.log('there is data')

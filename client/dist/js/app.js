@@ -78,9 +78,9 @@
 	(0, _reactTapEventPlugin2.default)();
 
 	_reactDom2.default.render(_react2.default.createElement(
-	  _MuiThemeProvider2.default,
-	  { muiTheme: (0, _getMuiTheme2.default)() },
-	  _react2.default.createElement(_reactRouter.Router, { history: _reactRouter.browserHistory, routes: _routes2.default })
+	      _MuiThemeProvider2.default,
+	      { muiTheme: (0, _getMuiTheme2.default)() },
+	      _react2.default.createElement(_reactRouter.Router, { history: _reactRouter.browserHistory, routes: _routes2.default })
 	), document.getElementById('hackcommerce-app'));
 
 /***/ }),
@@ -34894,7 +34894,8 @@
 	        }
 	    }, {
 	        path: '/items',
-	        component: _ItemList2.default
+	        component: _ItemList2.default,
+	        update: _Base2.default.incrementCartSize
 	    }, {
 	        path: '/checkout',
 	        component: _Checkout2.default
@@ -34912,6 +34913,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
 
@@ -34943,6 +34946,12 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	var styles = {
 	    navbar: {
 	        display: 'inline-block',
@@ -34952,83 +34961,124 @@
 	    }
 	};
 
-	var Base = function Base(_ref) {
-	    var children = _ref.children;
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	            'header',
-	            { id: 'header' },
-	            _react2.default.createElement(
-	                'h1',
+	var Base = function (_React$Component) {
+	    _inherits(Base, _React$Component);
+
+	    function Base(props) {
+	        _classCallCheck(this, Base);
+
+	        var _this = _possibleConstructorReturn(this, (Base.__proto__ || Object.getPrototypeOf(Base)).call(this, props));
+
+	        _this.state = {
+	            cartSize: _Auth2.default.getCartSize()
+	        };
+	        _this.incrementCartSize = _this.incrementCartSize.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(Base, [{
+	        key: 'incrementCartSize',
+	        value: function incrementCartSize() {
+	            this.setState({
+	                cartSize: this.state.cartSize + 1
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var children = this.props.children;
+
+
+	            console.log('Displaying all stuffs within Base\' props');
+	            console.log(this.props);
+
+	            return _react2.default.createElement(
+	                'div',
 	                null,
 	                _react2.default.createElement(
-	                    'a',
-	                    { href: '#' },
-	                    'Coripurse',
-	                    _react2.default.createElement('abbr', null)
-	                )
-	            ),
-	            _Auth2.default.isUserAuthenticated() ? _react2.default.createElement(
-	                'div',
-	                { style: { float: 'right', width: '500px' } },
-	                _react2.default.createElement(
-	                    'p',
-	                    { style: styles.navbar },
-	                    _react2.default.createElement('i', { className: 'fa fa-user user-icon', 'aria-hidden': 'true' }),
-	                    _Auth2.default.getUserData().d.EmailAddress
-	                ),
-	                _react2.default.createElement(
-	                    'p',
-	                    { style: styles.navbar },
+	                    'header',
+	                    { id: 'header', style: { marginBottom: '0px' } },
 	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/logout' },
-	                        'Log out'
+	                        'h1',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#' },
+	                            'Coripurse',
+	                            _react2.default.createElement('abbr', null)
+	                        )
+	                    ),
+	                    _Auth2.default.isUserAuthenticated() ? _react2.default.createElement(
+	                        'div',
+	                        { style: { float: 'right', width: '400px' } },
+	                        _react2.default.createElement(
+	                            'p',
+	                            { style: styles.navbar },
+	                            _react2.default.createElement('i', { className: 'fa fa-user user-icon', 'aria-hidden': 'true' }),
+	                            _Auth2.default.getUserData().d.EmailAddress
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            { style: styles.navbar },
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/logout' },
+	                                'Log out'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            { style: styles.navbar },
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/checkout' },
+	                                'Check out'
+	                            )
+	                        )
+	                    ) : _react2.default.createElement(
+	                        'div',
+	                        { id: 'notifications' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'nav navbar-left-link' },
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/login' },
+	                                'Log in'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'nav' },
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/signup' },
+	                                'Register'
+	                            )
+	                        )
 	                    )
 	                ),
 	                _react2.default.createElement(
-	                    'p',
-	                    { style: styles.navbar },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/checkout' },
-	                        'Check out'
-	                    )
-	                )
-	            ) : _react2.default.createElement(
-	                'div',
-	                { id: 'notifications' },
-	                _react2.default.createElement(
-	                    'p',
-	                    { className: 'nav navbar-left-link' },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/login' },
-	                        'Log in'
-	                    )
+	                    'div',
+	                    { style: { marginTop: '50px' } },
+	                    _react2.default.createElement(_Cart2.default, { cartSize: this.state.cartSize })
 	                ),
 	                _react2.default.createElement(
-	                    'p',
-	                    { className: 'nav' },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/signup' },
-	                        'Register'
-	                    )
+	                    'div',
+	                    { style: { marginBottom: '80px' } },
+	                    children
+	                ),
+	                _react2.default.createElement(
+	                    'footer',
+	                    { className: 'footer' },
+	                    'Coripurse - Making payment simple'
 	                )
-	            )
-	        ),
-	        _react2.default.createElement(_Cart2.default, { cartSize: _Auth2.default.getCartSize() }),
-	        children,
-	        _react2.default.createElement(
-	            'footer',
-	            { className: 'footer' },
-	            'Coripurse - Making payment simple'
-	        )
-	    );
-	};
+	            );
+	        }
+	    }]);
+
+	    return Base;
+	}(_react2.default.Component);
 
 	Base.propTypes = {
 	    children: _react.PropTypes.object.isRequired
@@ -45770,6 +45820,7 @@
 	        });
 
 	        xhr.send(payload);
+	        alert('Item \'' + props.name + '\' has been added to your cart.');
 	    }
 
 	    return _react2.default.createElement(
@@ -46032,7 +46083,6 @@
 	            var _this2 = this;
 
 	            // create an AJAX request
-	            console.log('Loading Items');
 	            var xhr = new XMLHttpRequest();
 	            xhr.open('post', 'http://localhost:5010/api/getItems');
 	            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -46051,18 +46101,20 @@
 	    }, {
 	        key: 'renderItems',
 	        value: function renderItems() {
-	            console.log('rendering items.........');
-	            console.log(this.state.data);
+	            var _this3 = this;
+
 	            return this.state.data.map(function (product) {
 	                return (
 	                    // console.log('map function'); ok
 	                    // console.log(product.Name); ok
 	                    _react2.default.createElement(_MediaCard2.default, {
+	                        style: { display: 'inline-block', marginRight: '15px' },
 	                        name: product.Name,
 	                        description: product.Description,
 	                        image: product.ImageURL,
 	                        price: product.Price,
-	                        productId: product.ID
+	                        productId: product.ID,
+	                        updateCart: _this3.props.incrementCartSize
 	                    })
 	                );
 	            });
@@ -46083,6 +46135,9 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+
+	            console.log('displaying all props of itemList.');
+	            console.log(this.props);
 
 	            if (this.state.data) {
 	                console.log('there is data');
@@ -51726,46 +51781,21 @@
 	    value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var Cart = function Cart(props) {
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Cart = function (_React$Component) {
-	    _inherits(Cart, _React$Component);
-
-	    function Cart() {
-	        _classCallCheck(this, Cart);
-
-	        return _possibleConstructorReturn(this, (Cart.__proto__ || Object.getPrototypeOf(Cart)).apply(this, arguments));
-	    }
-
-	    _createClass(Cart, [{
-	        key: 'render',
-	        value: function render() {
-	            var cartSize = this.props.cartSize;
-
-	            console.log(cartSize);
-	            return _react2.default.createElement(
-	                'p',
-	                { style: { width: '50px', marginRight: '5px', float: 'right' } },
-	                'Cart ',
-	                cartSize
-	            );
-	        }
-	    }]);
-
-	    return Cart;
-	}(_react2.default.Component);
+	    return _react2.default.createElement(
+	        'p',
+	        { style: { width: '100px', marginRight: '5px', float: 'right' } },
+	        'Items in the Cart ',
+	        props.cartSize
+	    );
+	};
 
 	exports.default = Cart;
 
@@ -54286,9 +54316,7 @@
 
 	var _LoadingBox2 = _interopRequireDefault(_LoadingBox);
 
-	var _Button = __webpack_require__(499);
-
-	var _Button2 = _interopRequireDefault(_Button);
+	var _reactBootstrap = __webpack_require__(609);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54310,7 +54338,7 @@
 	            data: false
 	        };
 	        _this.loadCart = _this.loadCart.bind(_this);
-
+	        _this.verify_click = _this.verify_click.bind(_this);
 	        return _this;
 	    }
 
@@ -54360,6 +54388,11 @@
 	            this.loadCart();
 	        }
 	    }, {
+	        key: 'verify_click',
+	        value: function verify_click() {
+	            if (true) alert('Sorry but we did not detect that you are the owner of this account.');
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 
@@ -54369,100 +54402,104 @@
 	                    null,
 	                    _react2.default.createElement(
 	                        'div',
-	                        null,
+	                        { className: 'table100 ver1 m-b-110' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'table100 ver1 m-b-110' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'table100-head' },
-	                                _react2.default.createElement(
-	                                    'table',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'thead',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'tr',
-	                                            { className: 'row100 head' },
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                { className: 'cell100 column1' },
-	                                                'Product Name'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                { className: 'cell100 column2' },
-	                                                'Quantity'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                { className: 'cell100 column3' },
-	                                                'Unit price'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                { className: 'cell100 column4' },
-	                                                'Total'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'table100-body js-pscroll' },
+	                            { className: 'table100-head' },
 	                            _react2.default.createElement(
 	                                'table',
 	                                null,
 	                                _react2.default.createElement(
-	                                    'tbody',
+	                                    'thead',
 	                                    null,
-	                                    this.state.data.map(function (item) {
-	                                        return _react2.default.createElement(
-	                                            'tr',
-	                                            { className: 'row100 body' },
-	                                            _react2.default.createElement(
-	                                                'td',
-	                                                { className: 'cell100 column1' },
-	                                                item.Name
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'td',
-	                                                { className: 'cell100 column2' },
-	                                                item.Quantity
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'td',
-	                                                { className: 'cell100 column3' },
-	                                                item.Price
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'td',
-	                                                { className: 'cell100 column4' },
-	                                                item.Total
-	                                            )
-	                                        );
-	                                    })
+	                                    _react2.default.createElement(
+	                                        'tr',
+	                                        { className: 'row100 head' },
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            { className: 'cell100 column1' },
+	                                            'Product Name'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            { className: 'cell100 column2' },
+	                                            'Quantity'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            { className: 'cell100 column3' },
+	                                            'Unit price'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            { className: 'cell100 column4' },
+	                                            'Total'
+	                                        )
+	                                    )
 	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement(
-	                                'p',
-	                                null,
-	                                'Total amount: ',
-	                                _Auth2.default.getTotalPrice()
 	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        _Button2.default,
-	                        { size: 'small', color: 'primary' },
-	                        'Verify'
+	                        'div',
+	                        { className: 'table100-body js-pscroll' },
+	                        _react2.default.createElement(
+	                            'table',
+	                            null,
+	                            _react2.default.createElement(
+	                                'tbody',
+	                                null,
+	                                this.state.data.map(function (item) {
+	                                    return _react2.default.createElement(
+	                                        'tr',
+	                                        { className: 'row100 body' },
+	                                        _react2.default.createElement(
+	                                            'td',
+	                                            { className: 'cell100 column1' },
+	                                            item.Name
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'td',
+	                                            { className: 'cell100 column2' },
+	                                            item.Quantity
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'td',
+	                                            { className: 'cell100 column3' },
+	                                            item.Price
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'td',
+	                                            { className: 'cell100 column4' },
+	                                            item.Total
+	                                        )
+	                                    );
+	                                })
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { style: { display: 'inline-block' } },
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            'Total amount: ',
+	                            _Auth2.default.getTotalPrice()
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { style: { float: 'right', display: 'inline-block' } },
+	                        _react2.default.createElement(
+	                            _reactBootstrap.ButtonToolbar,
+	                            { style: { marginLeft: 'auto', marginRight: 'auto' } },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Button,
+	                                { bsStyle: 'info', onclick: this.verify_click() },
+	                                'Verify & Pay'
+	                            )
+	                        )
 	                    )
 	                );
 	            } else {
