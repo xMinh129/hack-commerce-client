@@ -69,7 +69,7 @@ class Checkout extends React.Component {
                                 <table>
                                     <thead>
                                     <tr className="row100 head">
-                                        <th className="cell100 column1">Product Id</th>
+                                        <th className="cell100 column1">Product Name</th>
                                         <th className="cell100 column2">Quantity</th>
                                         <th className="cell100 column3">Unit price</th>
                                         <th className="cell100 column4">Total</th>
@@ -84,7 +84,7 @@ class Checkout extends React.Component {
                                 <tbody>
                                 {this.state.data.map(item =>
                                     <tr className="row100 body">
-                                        <td className="cell100 column1">{item.ProductId}</td>
+                                        <td className="cell100 column1">{item.Name}</td>
                                         <td className="cell100 column2">{item.Quantity}</td>
                                         <td className="cell100 column3">{item.Price}</td>
                                         <td className="cell100 column4">{item.Total}</td>

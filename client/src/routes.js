@@ -6,6 +6,7 @@ import ItemList from './components/Items/ItemList.jsx';
 import Auth from './modules/Auth';
 import SimpleCard from './components/Items/SimpleCard.jsx'
 import Checkout from './components/Main/Checkout.jsx';
+import FindProductButton from './components/Main/FindProductButton.jsx';
 
 
 const routes = {
@@ -14,7 +15,7 @@ const routes = {
         childRoutes: [
             {
                 path: '/',
-                component: ItemList
+                component: FindProductButton
                 // getComponent: (location, callback) => {
                 //     if (Auth.isUserAuthenticated()) {
                 //         console.log('authenticated')

@@ -6,7 +6,7 @@ class Cart extends React.Component {
         const { cartSize } = this.props;
         console.log(cartSize);
         return (
-            <p>
+            <p style={{width: '50px', marginRight: '5px', float: 'right'}}>
                 Cart {cartSize}
             </p>
         )

@@ -12,6 +12,7 @@ import Auth from '../../modules/Auth';
 const styles = {
     card: {
         maxWidth: 345,
+        marginBottom: 20
     },
     media: {
         height: 0,
