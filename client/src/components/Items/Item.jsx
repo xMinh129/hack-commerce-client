@@ -3,8 +3,8 @@ import React, {PropTypes} from 'react';
 class Item extends React.Component {
 
     render() {
-        const { name, image, price } = this.props
-        console.log('Item component rendering')
+        const { name, image, price } = this.props;
+
         return (
             <div>
                 <p>

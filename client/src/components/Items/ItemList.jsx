@@ -32,7 +32,6 @@ class ItemList extends React.Component {
                 this.setState({
                     data: xhr.response.items.d
                 });
-                console.log(this.state.data)
             }
 
         });

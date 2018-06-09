@@ -34832,15 +34832,15 @@
 
 	var _Base2 = _interopRequireDefault(_Base);
 
-	var _HomePage = __webpack_require__(587);
+	var _HomePage = __webpack_require__(588);
 
 	var _HomePage2 = _interopRequireDefault(_HomePage);
 
-	var _DashboardPage = __webpack_require__(588);
+	var _DashboardPage = __webpack_require__(589);
 
 	var _DashboardPage2 = _interopRequireDefault(_DashboardPage);
 
-	var _LoginPage = __webpack_require__(592);
+	var _LoginPage = __webpack_require__(593);
 
 	var _LoginPage2 = _interopRequireDefault(_LoginPage);
 
@@ -34855,6 +34855,10 @@
 	var _SimpleCard = __webpack_require__(398);
 
 	var _SimpleCard2 = _interopRequireDefault(_SimpleCard);
+
+	var _Checkout = __webpack_require__(606);
+
+	var _Checkout2 = _interopRequireDefault(_Checkout);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34887,6 +34891,9 @@
 	    }, {
 	        path: '/items',
 	        component: _ItemList2.default
+	    }, {
+	        path: '/checkout',
+	        component: _Checkout2.default
 	    }]
 	};
 
@@ -34924,6 +34931,10 @@
 
 	var _ItemList2 = _interopRequireDefault(_ItemList);
 
+	var _Cart = __webpack_require__(587);
+
+	var _Cart2 = _interopRequireDefault(_Cart);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Base = function Base(_ref) {
@@ -34958,6 +34969,16 @@
 	                            { className: 'nav navbar-left-link' },
 	                            _react2.default.createElement('i', { className: 'fa fa-user user-icon', 'aria-hidden': 'true' }),
 	                            _Auth2.default.getUserData().d.EmailAddress
+	                        ),
+	                        _react2.default.createElement(_Cart2.default, { cartSize: _Auth2.default.getCartSize() }),
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'nav' },
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/checkout' },
+	                                'Check out'
+	                            )
 	                        ),
 	                        _react2.default.createElement(
 	                            'p',
@@ -35069,6 +35090,8 @@
 	        value: function deauthenticateUser() {
 	            localStorage.removeItem('token');
 	            localStorage.removeItem('userData');
+	            localStorage.removeItem('cartCookie');
+	            localStorage.removeItem('cartSize');
 	        }
 
 	        /**
@@ -35093,6 +35116,18 @@
 	        key: 'setCartCookie',
 	        value: function setCartCookie(cartCookie) {
 	            localStorage.setItem('cartCookie', cartCookie);
+	        }
+	    }, {
+	        key: 'getCartSize',
+	        value: function getCartSize() {
+	            if (localStorage.getItem('cartSize')) {
+	                return localStorage.getItem('cartSize');
+	            }
+	        }
+	    }, {
+	        key: 'setCartSize',
+	        value: function setCartSize(cartSize) {
+	            localStorage.setItem('cartSize', cartSize);
 	        }
 	    }]);
 
@@ -45665,10 +45700,6 @@
 	        price = props.price,
 	        productId = props.productId;
 
-	    console.log(props);
-	    console.log('media card is rendered');
-	    console.log(name);
-	    console.log(props.image);
 
 	    function addToCart() {
 	        var quantity = 1;
@@ -45691,12 +45722,16 @@
 	        xhr.addEventListener('load', function () {
 	            if (xhr.status === 200) {
 
+	                console.log(xhr.response.size);
+
 	                // save the token and user data
 	                if (!_Auth2.default.getCartCookie()) {
 	                    _Auth2.default.setCartCookie(xhr.response.cookie.d);
 	                }
 
+	                _Auth2.default.setCartSize(xhr.response.size);
 	                console.log('Added to cart');
+	                console.log(_Auth2.default.getCartSize());
 
 	                // // change the current URL to /
 	                // this.context.router.replace('/');
@@ -45978,7 +46013,6 @@
 	                    _this2.setState({
 	                        data: xhr.response.items.d
 	                    });
-	                    console.log(_this2.state.data);
 	                }
 	            });
 	            xhr.send();
@@ -51585,7 +51619,7 @@
 	                image = _props.image,
 	                price = _props.price;
 
-	            console.log('Item component rendering');
+
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -51614,6 +51648,59 @@
 
 /***/ }),
 /* 587 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Cart = function (_React$Component) {
+	    _inherits(Cart, _React$Component);
+
+	    function Cart() {
+	        _classCallCheck(this, Cart);
+
+	        return _possibleConstructorReturn(this, (Cart.__proto__ || Object.getPrototypeOf(Cart)).apply(this, arguments));
+	    }
+
+	    _createClass(Cart, [{
+	        key: 'render',
+	        value: function render() {
+	            var cartSize = this.props.cartSize;
+
+	            console.log(cartSize);
+	            return _react2.default.createElement(
+	                'p',
+	                null,
+	                'Cart ',
+	                cartSize
+	            );
+	        }
+	    }]);
+
+	    return Cart;
+	}(_react2.default.Component);
+
+	exports.default = Cart;
+
+/***/ }),
+/* 588 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51665,7 +51752,7 @@
 	exports.default = HomePage;
 
 /***/ }),
-/* 588 */
+/* 589 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51680,11 +51767,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Dashboard = __webpack_require__(589);
+	var _Dashboard = __webpack_require__(590);
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _api_methods = __webpack_require__(591);
+	var _api_methods = __webpack_require__(592);
 
 	var _api_methods2 = _interopRequireDefault(_api_methods);
 
@@ -51741,7 +51828,7 @@
 	exports.default = DashboardPage;
 
 /***/ }),
-/* 589 */
+/* 590 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51754,7 +51841,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Overview = __webpack_require__(590);
+	var _Overview = __webpack_require__(591);
 
 	var _Overview2 = _interopRequireDefault(_Overview);
 
@@ -51788,7 +51875,7 @@
 	}
 
 /***/ }),
-/* 590 */
+/* 591 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51810,7 +51897,7 @@
 	exports.default = Overview;
 
 /***/ }),
-/* 591 */
+/* 592 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -51863,7 +51950,7 @@
 	module.exports = apiRequest;
 
 /***/ }),
-/* 592 */
+/* 593 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51882,7 +51969,7 @@
 
 	var _Auth2 = _interopRequireDefault(_Auth);
 
-	var _LoginForm = __webpack_require__(593);
+	var _LoginForm = __webpack_require__(594);
 
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 
@@ -52007,7 +52094,7 @@
 	exports.default = LoginPage;
 
 /***/ }),
-/* 593 */
+/* 594 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52024,11 +52111,11 @@
 
 	var _Card = __webpack_require__(529);
 
-	var _RaisedButton = __webpack_require__(594);
+	var _RaisedButton = __webpack_require__(595);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
-	var _TextField = __webpack_require__(596);
+	var _TextField = __webpack_require__(597);
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
@@ -52115,7 +52202,7 @@
 	exports.default = LoginForm;
 
 /***/ }),
-/* 594 */
+/* 595 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52125,7 +52212,7 @@
 	});
 	exports.default = undefined;
 
-	var _RaisedButton = __webpack_require__(595);
+	var _RaisedButton = __webpack_require__(596);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -52134,7 +52221,7 @@
 	exports.default = _RaisedButton2.default;
 
 /***/ }),
-/* 595 */
+/* 596 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -52614,7 +52701,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 596 */
+/* 597 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52624,7 +52711,7 @@
 	});
 	exports.default = undefined;
 
-	var _TextField = __webpack_require__(597);
+	var _TextField = __webpack_require__(598);
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
@@ -52633,7 +52720,7 @@
 	exports.default = _TextField2.default;
 
 /***/ }),
-/* 597 */
+/* 598 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -52690,19 +52777,19 @@
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
-	var _EnhancedTextarea = __webpack_require__(598);
+	var _EnhancedTextarea = __webpack_require__(599);
 
 	var _EnhancedTextarea2 = _interopRequireDefault(_EnhancedTextarea);
 
-	var _TextFieldHint = __webpack_require__(602);
+	var _TextFieldHint = __webpack_require__(603);
 
 	var _TextFieldHint2 = _interopRequireDefault(_TextFieldHint);
 
-	var _TextFieldLabel = __webpack_require__(603);
+	var _TextFieldLabel = __webpack_require__(604);
 
 	var _TextFieldLabel2 = _interopRequireDefault(_TextFieldLabel);
 
-	var _TextFieldUnderline = __webpack_require__(604);
+	var _TextFieldUnderline = __webpack_require__(605);
 
 	var _TextFieldUnderline2 = _interopRequireDefault(_TextFieldUnderline);
 
@@ -53214,7 +53301,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 598 */
+/* 599 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -53259,7 +53346,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactEventListener = __webpack_require__(599);
+	var _reactEventListener = __webpack_require__(600);
 
 	var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -53460,7 +53547,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 599 */
+/* 600 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -53523,7 +53610,7 @@
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _supports = __webpack_require__(600);
+	var _supports = __webpack_require__(601);
 
 	var supports = _interopRequireWildcard(_supports);
 
@@ -53690,7 +53777,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 600 */
+/* 601 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53700,7 +53787,7 @@
 	});
 	exports.passiveOption = exports.detachEvent = exports.attachEvent = exports.removeEventListener = exports.addEventListener = exports.canUseDOM = undefined;
 
-	var _defineProperty = __webpack_require__(601);
+	var _defineProperty = __webpack_require__(602);
 
 	var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -53743,7 +53830,7 @@
 	}();
 
 /***/ }),
-/* 601 */
+/* 602 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -53767,7 +53854,7 @@
 	}
 
 /***/ }),
-/* 602 */
+/* 603 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -53849,7 +53936,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 603 */
+/* 604 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -53968,7 +54055,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 604 */
+/* 605 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -54104,6 +54191,210 @@
 
 	exports.default = TextFieldUnderline;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ }),
+/* 606 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Auth = __webpack_require__(397);
+
+	var _Auth2 = _interopRequireDefault(_Auth);
+
+	var _LoadingBox = __webpack_require__(585);
+
+	var _LoadingBox2 = _interopRequireDefault(_LoadingBox);
+
+	var _Button = __webpack_require__(499);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Checkout = function (_React$Component) {
+	    _inherits(Checkout, _React$Component);
+
+	    function Checkout(props) {
+	        _classCallCheck(this, Checkout);
+
+	        var _this = _possibleConstructorReturn(this, (Checkout.__proto__ || Object.getPrototypeOf(Checkout)).call(this, props));
+
+	        _this.state = {
+	            data: false
+	        };
+	        _this.loadCart = _this.loadCart.bind(_this);
+
+	        return _this;
+	    }
+
+	    _createClass(Checkout, [{
+	        key: 'loadCart',
+	        value: function loadCart() {
+	            var _this2 = this;
+
+	            var payload = "";
+	            if (_Auth2.default.getCartCookie()) {
+	                var cartCookie = _Auth2.default.getCartCookie();
+	                console.log(cartCookie);
+	                payload = 'cartCookie=' + cartCookie;
+	            }
+
+	            // create an AJAX request
+	            var xhr = new XMLHttpRequest();
+	            xhr.open('post', 'http://localhost:5010/api/getCart');
+	            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	            xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+	            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+	            xhr.responseType = 'json';
+	            xhr.addEventListener('load', function () {
+	                if (xhr.status === 200) {
+
+	                    _this2.setState({
+	                        data: xhr.response.cart.d.Items
+	                    });
+	                    console.log(_this2.state.data);
+
+	                    // // change the current URL to /
+	                    // this.context.router.replace('/');
+	                } else {
+	                    // failure
+
+	                    // change the component state
+	                    var errors = xhr.response.errors ? xhr.response.errors : {};
+	                    errors.summary = xhr.response.message;
+	                }
+	            });
+
+	            xhr.send(payload);
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.loadCart();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            if (this.state.data) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'table100 ver1 m-b-110' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'table100-head' },
+	                                _react2.default.createElement(
+	                                    'table',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'thead',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            { className: 'row100 head' },
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                { className: 'cell100 column1' },
+	                                                'Product Id'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                { className: 'cell100 column2' },
+	                                                'Quantity'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                { className: 'cell100 column3' },
+	                                                'Unit price'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                { className: 'cell100 column4' },
+	                                                'Total'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'table100-body js-pscroll' },
+	                            _react2.default.createElement(
+	                                'table',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'tbody',
+	                                    null,
+	                                    this.state.data.map(function (item) {
+	                                        return _react2.default.createElement(
+	                                            'tr',
+	                                            { className: 'row100 body' },
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { className: 'cell100 column1' },
+	                                                item.ProductId
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { className: 'cell100 column2' },
+	                                                item.Quantity
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { className: 'cell100 column3' },
+	                                                item.Price
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { className: 'cell100 column4' },
+	                                                item.Total
+	                                            )
+	                                        );
+	                                    })
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        _Button2.default,
+	                        { size: 'small', color: 'primary' },
+	                        'Verify'
+	                    )
+	                );
+	            } else {
+	                return _react2.default.createElement(_LoadingBox2.default, null);
+	            }
+	        }
+	    }]);
+
+	    return Checkout;
+	}(_react2.default.Component);
+
+	exports.default = Checkout;
 
 /***/ })
 /******/ ]);

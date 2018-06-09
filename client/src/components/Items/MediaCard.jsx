@@ -22,10 +22,6 @@ const styles = {
 
 function MediaCard(props) {
     const {classes, name, image, price, productId} = props;
-    console.log(props);
-    console.log('media card is rendered');
-    console.log(name);
-    console.log(props.image);
 
     function addToCart(){
         const quantity = 1;
@@ -50,13 +46,17 @@ function MediaCard(props) {
         xhr.addEventListener('load', () => {
             if (xhr.status === 200) {
 
+                console.log(xhr.response.size);
 
                 // save the token and user data
                 if (!Auth.getCartCookie()){
                     Auth.setCartCookie(xhr.response.cookie.d);
+
                 }
 
+                Auth.setCartSize(xhr.response.size);
                 console.log('Added to cart');
+                console.log(Auth.getCartSize())
 
 
                 // // change the current URL to /

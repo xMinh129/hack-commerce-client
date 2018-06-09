@@ -4,6 +4,7 @@ import Auth from '../../modules/Auth';
 import SimpleCard from '../Items/SimpleCard.jsx'
 import MediaCard from '../Items/MediaCard.jsx'
 import ItemList from '../Items/ItemList.jsx'
+import Cart from "../Items/Cart.jsx"
 
 
 const Base = ({children}) => (
@@ -26,6 +27,8 @@ const Base = ({children}) => (
                                 <i className="fa fa-user user-icon" aria-hidden="true"></i>
                                 {Auth.getUserData().d.EmailAddress}
                             </p>
+                            <Cart cartSize={Auth.getCartSize()}></Cart>
+                            <p className="nav"><Link to="/checkout">Check out</Link></p>
                             <p className="nav"><Link to="/logout">Log out</Link></p>
                         </div>
                     </div>
