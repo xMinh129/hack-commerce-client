@@ -16,15 +16,6 @@ const routes = {
             {
                 path: '/',
                 component: FindProductButton
-                // getComponent: (location, callback) => {
-                //     if (Auth.isUserAuthenticated()) {
-                //         console.log('authenticated')
-                //         callback(null, DashboardPage);
-                //     } else {
-                //         console.log('Not authenticated')
-                //         callback(null, HomePage);
-                //     }
-                // }
             },
             {
                 path: '/login',

@@ -21,15 +21,49 @@ class Base extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            cartSize: Auth.getCartSize()
+            cartSize: Auth.getCartSize(),
+            balance: 0
         }
         this.incrementCartSize = this.incrementCartSize.bind(this)
+        this.getBalance = this.getBalance.bind(this)
     }
 
     incrementCartSize(){
         this.setState({
             cartSize: this.state.cartSize + 1
         })
+    }
+
+    componentWillMount() {
+        this.getBalance()
+    }
+
+
+
+    getBalance() {
+
+        let payload = 'currencyIsoCode=USD';
+        // create an AJAX request
+        const xhr = new XMLHttpRequest();
+        xhr.open('post', 'http://localhost:5010/api/getBalance');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+        xhr.setRequestHeader('Company-Hash', '3Yv6kN8L');
+        xhr.setRequestHeader('Coriunder-Cloud-Token', Auth.getToken());
+        xhr.responseType = 'json';
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+                console.log('xhr.response')
+                console.log(xhr.response)
+                this.setState({
+                    balance: xhr.response.d[0].Current
+                });
+
+            }
+
+        });
+        xhr.send(payload)
     }
 
     render() {
@@ -42,7 +76,7 @@ class Base extends React.Component {
             <div>
                 <header id='header' style={{ marginBottom: '0px' }}>
                     <h1>
-                        <a href='#'>
+                        <a href='/'>
                             Coripurse
                             <abbr></abbr>
                         </a>
@@ -70,7 +104,10 @@ class Base extends React.Component {
                 </header>
 
                 <div style={{marginTop: '50px'}}>
-                    <Cart cartSize={this.state.cartSize}></Cart>
+                    <Cart
+                        cartSize={this.state.cartSize}
+                        balance={this.state.balance}
+                    />
                 </div>
 
                 <div style={{marginBottom: '80px'}}>
