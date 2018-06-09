@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import {Card} from 'material-ui/Card';
 import LoadingBox from '../Utilities/LoadingBox.jsx';
 import MediaCard from '../Items/MediaCard.jsx'
+import _ from 'lodash'
 import Item from './Item.jsx'
 
 // import apiRequest from '../../api_methods.jsx';
@@ -59,12 +60,12 @@ class ItemList extends React.Component {
         this.loadItems()
     }
 
-    componentWillMount() {
-
-    }
-
-    componentDidUpdate() {
-
+    shouldComponentUpdate(nextProps, nextState) {
+        let shouldUpdate = (Object.keys(nextProps).length !== 0)
+            && (!_.isEqual(nextProps, this.props) || !_.isEqual(nextState, this.state))
+        console.log('inside shouldComponentUpdate, showing')
+        console.log(shouldUpdate)
+        return shouldUpdate
     }
 
     render() {
