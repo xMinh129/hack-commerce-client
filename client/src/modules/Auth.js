@@ -32,6 +32,8 @@ class Auth {
     static deauthenticateUser() {
         localStorage.removeItem('token');
         localStorage.removeItem('userData');
+        localStorage.removeItem('cartCookie');
+        localStorage.removeItem('cartSize');
     }
 
     /**
@@ -53,6 +55,17 @@ class Auth {
 
     static setCartCookie(cartCookie) {
         localStorage.setItem('cartCookie', cartCookie);
+    }
+
+     static getCartSize() {
+        if (localStorage.getItem('cartSize')) {
+            return localStorage.getItem('cartSize')
+        }
+
+    }
+
+    static setCartSize(cartSize) {
+        localStorage.setItem('cartSize', cartSize);
     }
 
 }

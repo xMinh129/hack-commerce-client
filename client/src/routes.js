@@ -5,7 +5,7 @@ import LoginPage from './containers/LoginPage.jsx';
 import ItemList from './components/Items/ItemList.jsx';
 import Auth from './modules/Auth';
 import SimpleCard from './components/Items/SimpleCard.jsx'
-
+import Checkout from './components/Main/Checkout.jsx';
 
 
 const routes = {
@@ -32,18 +32,28 @@ const routes = {
         {
             path: '/logout',
             onEnter: (nextState, replace) => {
-                Auth.deauthenticateUser();
+            Auth.deauthenticateUser();
 
-                // change the current URL to /
-                replace('/');
-            }
-        },
-        {
-            path: '/items',
-            component: ItemList
-        },
+// change the current URL to /
+replace('/');
+}
+},
+{
+    path: '/items',
+        component
+:
+    ItemList
+}
+,
+{
+    path: '/checkout',
+        component
+:
+    Checkout
+}
 
-    ]
-};
+]
+}
+;
 
 export default routes;
