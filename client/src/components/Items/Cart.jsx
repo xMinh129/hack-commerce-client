@@ -3,9 +3,16 @@ import React, {PropTypes} from 'react';
 const Cart = (props) => {
 
     return (
-        <p style={{width: '100px', marginRight: '5px', float: 'right'}}>
-            Items in the Cart {props.cartSize}
-        </p>
+        <div>
+            <p style={{width: '100px', marginRight: '5px', float: 'right', display: 'block'}}>
+                Your account Balance <bold>{props.balance}</bold>
+            </p>
+
+            <p style={{width: '100px', marginRight: '5px', float: 'right', display: 'block'}}>
+                Items in the Cart <bold>{props.cartSize}</bold>
+            </p>
+        </div>
+
     )
 
 }
