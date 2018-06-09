@@ -45711,8 +45711,11 @@
 	        name = props.name,
 	        image = props.image,
 	        price = props.price,
+	        description = props.description,
 	        productId = props.productId;
 
+
+	    console.log('Media Card is rendering');
 
 	    function addToCart() {
 	        var quantity = 1;
@@ -45813,8 +45816,9 @@
 	MediaCard.propTypes = {
 	    classes: _propTypes2.default.object.isRequired,
 	    name: _propTypes2.default.string.isRequired,
-	    image: _propTypes2.default.string.isRequired,
-	    price: _propTypes2.default.string.isRequired
+	    // image: PropTypes.string.isRequired,
+	    price: _propTypes2.default.string.isRequired,
+	    description: _propTypes2.default.string.isRequired
 	};
 
 	exports.default = (0, _styles.withStyles)(styles)(MediaCard);
@@ -46007,6 +46011,7 @@
 	        };
 	        _this.loadItems = _this.loadItems.bind(_this);
 	        _this.renderItems = _this.renderItems.bind(_this);
+
 	        return _this;
 	    }
 
@@ -46035,24 +46040,30 @@
 	    }, {
 	        key: 'renderItems',
 	        value: function renderItems() {
+	            console.log('rendering items.........');
+	            console.log(this.state.data);
 	            return this.state.data.map(function (product) {
-	                _react2.default.createElement(_MediaCard2.default, {
-	                    name: product.Name,
-	                    description: product.Description,
-	                    image: product.ImageURL,
-	                    price: product.Price,
-	                    productId: product.ID
-	                });
+	                return (
+	                    // console.log('map function'); ok
+	                    // console.log(product.Name); ok
+	                    _react2.default.createElement(_MediaCard2.default, {
+	                        name: product.Name,
+	                        description: product.Description,
+	                        image: product.ImageURL,
+	                        price: product.Price,
+	                        productId: product.ID
+	                    })
+	                );
 	            });
 	        }
 	    }, {
 	        key: 'componentDidMount',
-	        value: function componentDidMount() {}
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
+	        value: function componentDidMount() {
 	            this.loadItems();
 	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {}
 	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {}
@@ -46063,11 +46074,12 @@
 	            if (this.state.data) {
 	                console.log('there is data');
 	                return _react2.default.createElement(
-	                    _Card.Card,
+	                    'div',
 	                    null,
 	                    this.renderItems()
 	                );
 	            } else {
+	                console.log('there isn\'t data');
 	                return _react2.default.createElement(_LoadingBox2.default, null);
 	            }
 	        }
@@ -51620,20 +51632,32 @@
 	var Item = function (_React$Component) {
 	    _inherits(Item, _React$Component);
 
-	    function Item() {
+	    function Item(props) {
 	        _classCallCheck(this, Item);
 
-	        return _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
+	        // console.log('Item component is rendering')
 	    }
 
 	    _createClass(Item, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            console.log('Item component is rendering');
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _props = this.props,
 	                name = _props.name,
 	                image = _props.image,
-	                price = _props.price;
+	                price = _props.price,
+	                productId = _props.productId,
+	                description = _props.description;
 
+	            // console.log('item component is rendering...')
 
 	            return _react2.default.createElement(
 	                'div',
@@ -51651,6 +51675,16 @@
 	                    'p',
 	                    null,
 	                    price
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    description
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    productId
 	                )
 	            );
 	        }
@@ -51658,6 +51692,14 @@
 
 	    return Item;
 	}(_react2.default.Component);
+
+	Item.propTypes = {
+	    name: _react.PropTypes.string.isRequired,
+	    // image: PropTypes.string.isRequired,
+	    price: _react.PropTypes.number.isRequired,
+	    description: _react.PropTypes.string.isRequired,
+	    productId: _react.PropTypes.number.isRequired
+	};
 
 	exports.default = Item;
 

@@ -9,51 +9,49 @@ import Checkout from './components/Main/Checkout.jsx';
 
 
 const routes = {
-    // base component (wrapper for the whole application).
-    component: Base,
-    childRoutes: [
-        {
-            path: '/',
-            component: ItemList
-            // getComponent: (location, callback) => {
-            //     if (Auth.isUserAuthenticated()) {
-            //         console.log('authenticated')
-            //         callback(null, DashboardPage);
-            //     } else {
-            //         console.log('Not authenticated')
-            //         callback(null, HomePage);
-            //     }
-            // }
-        },
-        {
-            path: '/login',
-            component: LoginPage
-        },
-        {
-            path: '/logout',
-            onEnter: (nextState, replace) => {
-            Auth.deauthenticateUser();
+        // base component (wrapper for the whole application).
+        component: Base,
+        childRoutes: [
+            {
+                path: '/',
+                component: ItemList
+                // getComponent: (location, callback) => {
+                //     if (Auth.isUserAuthenticated()) {
+                //         console.log('authenticated')
+                //         callback(null, DashboardPage);
+                //     } else {
+                //         console.log('Not authenticated')
+                //         callback(null, HomePage);
+                //     }
+                // }
+            },
+            {
+                path: '/login',
+                component: LoginPage
+            },
+            {
+                path: '/logout',
+                onEnter: (nextState, replace) => {
+                    Auth.deauthenticateUser();
 
-// change the current URL to /
-replace('/');
-}
-},
-{
-    path: '/items',
-        component
-:
-    ItemList
-}
-,
-{
-    path: '/checkout',
-        component
-:
-    Checkout
-}
+                // change the current URL to /
+                    replace('/');
+                }
+            },
+            {
+                path: '/items',
+                component:
+                ItemList
+            }
+            ,
+            {
+                path: '/checkout',
+                component:
+                Checkout
+            }
 
-]
-}
+        ]
+    }
 ;
 
 export default routes;

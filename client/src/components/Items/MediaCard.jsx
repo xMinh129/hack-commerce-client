@@ -21,7 +21,9 @@ const styles = {
 
 
 function MediaCard(props) {
-    const {classes, name, image, price, productId} = props;
+    const {classes, name, image, price, description, productId} = props;
+
+    console.log('Media Card is rendering')
 
     function addToCart(){
         const quantity = 1;
@@ -112,8 +114,9 @@ function MediaCard(props) {
 MediaCard.propTypes = {
     classes: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired
+    // image: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(MediaCard);
