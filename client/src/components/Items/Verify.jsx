@@ -2,6 +2,11 @@ import React, {PropTypes} from 'react';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router';
 
+let divStyle = {
+  color: "#fd072c"
+};
+
+
 class Verification extends React.Component {
 
     constructor(props) {
@@ -17,8 +22,7 @@ class Verification extends React.Component {
     }
 
     verifyAccount() {
-
-        if (this.state.numberOfVerification < 3){
+        if (this.state.numberOfVerification < 3) {
             const xhr = new XMLHttpRequest();
             xhr.open('post', 'http://localhost:5010/api/verifyAccount');
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -26,14 +30,15 @@ class Verification extends React.Component {
             xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
             xhr.responseType = 'json';
             xhr.addEventListener('load', () => {
-                if (xhr.status === 200) {
+                if (xhr.status === 200 && xhr.response.success) {
 
 
                     this.setState({
                         data: xhr.response.success,
                         name: xhr.response.name
                     });
-                    if(this.state.data){
+                    alert('User verified');
+                    if (this.state.data) {
                         this.setState({
                             numberOfVerification: this.state.numberOfVerification + 1
                         })
@@ -43,8 +48,12 @@ class Verification extends React.Component {
 
                     // // change the current URL to /
                     // this.context.router.replace('/');
-                } else {
+                } else if (xhr.status === 200 && !xhr.response.success) {
+                    alert('User unidentified');
+                }
+                else {
                     // failure
+                    alert('Failing to authenticate');
 
                     // change the component state
                     const errors = xhr.response.errors ? xhr.response.errors : {};
@@ -61,8 +70,6 @@ class Verification extends React.Component {
     }
 
 
-
-
     componentDidMount() {
 
     }
@@ -75,7 +82,8 @@ class Verification extends React.Component {
         if (this.state.data) {
             return (
                 <div>
-                    <Button size="small" color="primary" >Verified</Button>
+                    <Button size="small" color="#14c27f"><i className="fa fa-check-circle"></i>Welcome
+                        back {this.state.name}</Button>
                     <Button size="small" color="primary"><Link to="/processPayment">Pay</Link></Button>
                 </div>
             )
@@ -83,8 +91,9 @@ class Verification extends React.Component {
         } else {
             return (
                 <div>
-                    <Button size="small" color="primary"  onClick={this.verifyAccount} >Please verify with your image</Button>
-                    <p>Unverified</p>
+                    <Button size="small" color="primary" onClick={this.verifyAccount}>Please verify with your
+                        image</Button>
+                    <p style={divStyle}><i className="fa fa-times-circle"></i>Unverified</p>
 
                 </div>
             )

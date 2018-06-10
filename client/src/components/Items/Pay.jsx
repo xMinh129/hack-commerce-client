@@ -3,8 +3,8 @@ import LoadingBox from '../Utilities/LoadingBox.jsx';
 import Auth from "../../modules/Auth";
 
 class Payment extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             data: false,
 
@@ -40,6 +40,12 @@ class Payment extends React.Component {
                     data: xhr.response
                 });
                 console.log(xhr.response);
+                Auth.setCartSize(0);
+                Auth.removeCart();
+
+                alert("Payment is successful");
+
+                this.context.router.replace('/');
 
 
             } else {

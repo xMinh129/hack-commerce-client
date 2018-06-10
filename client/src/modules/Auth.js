@@ -79,6 +79,10 @@ class Auth {
         localStorage.setItem('totalPrice', totalPrice);
     }
 
+    static removeCart(){
+        localStorage.removeItem('cartCookie');
+    }
+
 
 }
 

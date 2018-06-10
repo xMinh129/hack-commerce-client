@@ -7,5 +7,6 @@ app.use(express.static('./client/dist/'));
 
 // start the server
 app.listen(8010, () => {
-  console.log('Server is running on http://localhost:8010 or http://127.0.0.1:8010');
+    console.log('Server is running on http://localhost:8010 or http://127.0.0.1:8010');
 
+})

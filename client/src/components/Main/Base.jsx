@@ -35,7 +35,10 @@ class Base extends React.Component {
     }
 
     componentWillMount() {
-        this.getBalance()
+        this.getBalance();
+        this.setState({
+            cartSize: Auth.getCartSize()
+        })
     }
 
 
@@ -77,7 +80,7 @@ class Base extends React.Component {
                 <header id='header' style={{ marginBottom: '0px' }}>
                     <h1>
                         <a href='/'>
-                            Coripurse
+                            ExpressID
                             <abbr></abbr>
                         </a>
                     </h1>
@@ -103,19 +106,25 @@ class Base extends React.Component {
 
                 </header>
 
-                <div style={{marginTop: '50px'}}>
-                    <Cart
-                        cartSize={this.state.cartSize}
-                        balance={this.state.balance}
-                    />
-                </div>
+                {Auth.isUserAuthenticated() ? (
+                        <div style={{marginTop: '50px'}}>
+                            <Cart
+                                cartSize={this.state.cartSize}
+                                balance={this.state.balance}
+                            />
+                        </div>
+                    ):(
+                    <div></div>
+                )}
+
+
 
                 <div style={{marginBottom: '80px'}}>
                     {children}
                 </div>
 
                 <footer className='footer'>
-                    Coripurse - Making payment simple
+                   ExpressID - Making Payment Secure
                 </footer>
 
             </div>
